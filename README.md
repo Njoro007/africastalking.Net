@@ -3,7 +3,7 @@
  
 [![NuGet](https://img.shields.io/nuget/v/AfricasTalking.NET.svg)](https://www.nuget.org/packages/AfricasTalking.NET/)
 
-The Africa's Talking C# API wrapper provides convenient access to the Africa's Talking API from applications written in C#. With support for .NET45, .NET46 and .NET Core 2 +  
+The Africa's Talking C# API wrapper provides convenient access to the Africa's Talking API from applications written in C# and available on multiple .NET implementation
 
 ## Documentation 
 Take a look at the [API docs here](http://docs.africastalking.com/) for more information. 
@@ -36,7 +36,7 @@ Take a look at the [API docs here](http://docs.africastalking.com/) for more inf
 
 + On your Nuget package manager console,key in the following and press *Enter* 
 ```powershell 
-Install-Package AfricasTalking.NET -Version 1.2.3 
+Install-Package AfricasTalking.NET -Version 1.2.4 
 ```
 > Ensure you have the latest version of the package. Visit [Nuget](https://www.nuget.org/packages/AfricasTalking.NET/) for more info on the latest release of this package
 
