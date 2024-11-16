@@ -24,7 +24,6 @@ namespace AfricasTalkingCS
     using System.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using PhoneNumbers;
 
     /// <summary>
     /// The africas talking gateway class. Accepting sandbox as an environment
@@ -109,20 +108,18 @@ namespace AfricasTalkingCS
         /// <exception cref="AfricasTalkingGatewayException">
         /// Errors thrown by the gateway
         /// </exception>
-        public dynamic SendMessage(
-            string to,
-            string message,
-            string from = null,
-            int bulkSmsMode = -1,
-            Hashtable options = null)
+        public dynamic SendMessage(string PhoneNumbers, string message, bool IsLegacy = false, string from = null, int bulkSmsMode = 1, Hashtable options = null)
         {
+
             // TODO Convert options to type IDictionary
-            string[] numbers = to.Split(separator: new[] {','}, options: StringSplitOptions.RemoveEmptyEntries);
+            string[] numbers = PhoneNumbers.Split(separator: new[] {','}, options: StringSplitOptions.RemoveEmptyEntries);
             var isValidphoneNumber = IsPhoneNumber(numbers);
 
+            //Create an array of PhoneNumber(s) List<string> phoneNumbers in parameter
 
 
-            if (to.Length == 0 || message.Length == 0 || !isValidphoneNumber)
+
+            if (numbers.Length == 0 || message.Length == 0 || !isValidphoneNumber)
             {
                 throw new AfricasTalkingGatewayException("The message is either empty or phone number is not valid");
             }
@@ -130,12 +127,27 @@ namespace AfricasTalkingCS
             {
                 try
                 {
-                    var data = new Hashtable
-                                   {
-                                       ["username"] = this._username,
-                                       ["to"] = to,
-                                       ["message"] = message
-                                   };
+
+                    Hashtable data;
+                    if (!IsLegacy)
+                    {
+                        data = new Hashtable
+                        {
+                            ["username"] = this._username,
+                            ["phoneNumbers"] = new List<string>(numbers.Select(x => x.Replace("+", string.Empty))),
+                            ["message"] = message
+                        };
+                    }
+                    else
+                    {
+                        data = new Hashtable
+                        {
+                            ["username"] = this._username,
+                            ["to"] = string.Join(",", numbers),
+                            ["message"] = message
+                        };
+                    }
+
                     if (from != null)
                     {
                         data["from"] = from;
@@ -164,7 +176,9 @@ namespace AfricasTalkingCS
                         }
                     }
 
-                    var response = this.SendPostRequest(data, this.BulkSMSUrl);
+                    string bulkSmsUrl = (IsLegacy) ? $"{this.ApiHost}/version1/messaging" : this.BulkSMSUrl;
+
+                    var response = this.SendPostRequest(data, bulkSmsUrl, isJsonContentType: !IsLegacy);
                     dynamic json = JObject.Parse(response);
                     return json;
                 }
@@ -199,12 +213,7 @@ namespace AfricasTalkingCS
         /// <exception cref="AfricasTalkingGatewayException">
         /// Errors thrown by the gateway
         /// </exception>
-        public dynamic SendPremiumMessage(
-            string to,
-            string message,
-            string from ,
-            int bulkSmsMode = 0,
-            Hashtable options = null)
+        public dynamic SendPremiumMessage(string to,string message,string from ,int bulkSmsMode = 0,Hashtable options = null)
         {
             // TODO Convert options to type IDictionary
             string[] numbers = to.Split(separator: new[] {','}, options: StringSplitOptions.RemoveEmptyEntries);
@@ -770,7 +779,7 @@ namespace AfricasTalkingCS
         /// <summary>
         /// SMS Endpoint.
         /// </summary>
-        private string BulkSMSUrl => this.ApiHost + "/version1/messaging";
+        private string BulkSMSUrl => this.ApiHost + "/version1/messaging/bulk";
 
         /// <summary>
         /// Find Transaction by ID Endpoint
@@ -874,6 +883,9 @@ namespace AfricasTalkingCS
             }
         }
 
+
+
+
         /// <summary>
         /// The send post request helper method.
         /// </summary>
@@ -889,28 +901,38 @@ namespace AfricasTalkingCS
         /// <exception cref="AfricasTalkingGatewayException">
         /// Errors from our gateway class.
         /// </exception>
-        private string SendPostRequest(IDictionary data, string urlString)
+        private string SendPostRequest(IDictionary data, string urlString, bool isJsonContentType = false)
         {
             try
             {
                 var dataStr = string.Empty;
-                foreach (string key in data.Keys)
+                var jsonPayload = string.Empty;
+                if (!isJsonContentType)
                 {
-                    if (dataStr.Length > 0)
+                    foreach (string key in data.Keys)
                     {
-                        dataStr += "&";
+                        if (dataStr.Length > 0)
+                        {
+                            dataStr += "&";
+                        }
+
+                        var value = data[key].ToString();
+                        dataStr += HttpUtility.UrlEncode(key, Encoding.UTF8);
+                        dataStr += "=" + HttpUtility.UrlEncode(value, Encoding.UTF8);
                     }
-                    
-                    var value = data[key].ToString();
-                    dataStr += HttpUtility.UrlEncode(key, Encoding.UTF8);
-                    dataStr += "=" + HttpUtility.UrlEncode(value, Encoding.UTF8);
+                }
+                else
+                {
+                    jsonPayload = JsonConvert.SerializeObject(data);
                 }
 
-                var byteArray = Encoding.UTF8.GetBytes(dataStr);
+
+
+                var byteArray = (!isJsonContentType) ? Encoding.UTF8.GetBytes(dataStr) : Encoding.UTF8.GetBytes(jsonPayload);
                 ServicePointManager.ServerCertificateValidationCallback = RemoteCertificateValidationCallback;
                 var webRequest = (HttpWebRequest)WebRequest.Create(urlString);
                 webRequest.Method = "POST";
-                webRequest.ContentType = "application/x-www-form-urlencoded";
+                webRequest.ContentType = (!isJsonContentType) ? "application/x-www-form-urlencoded" : "application/json";
                 webRequest.ContentLength = byteArray.Length;
                 webRequest.Accept = "application/json";
                 webRequest.Headers.Add("apiKey", this._apikey);

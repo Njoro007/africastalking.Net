@@ -1,60 +1,58 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AfricasTalkingCS;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace AfricasTalkingCS_Tests
+namespace AfricasTalkingCS.Test
 {
-    
-    [TestClass]
-    public class VoiceService
+
+    public class VoiceServiceTest
     {
         private static string apikey = "6c36e56b86c24c2ff66adaff340d60793dff71ac304bc551f7056ca76dd8032a";
         private static string username = "sandbox";
-        private readonly AfricasTalkingGateway _atGWInstance = new AfricasTalkingGateway(username,apikey);
+        private readonly AfricasTalkingGateway _atGWInstance = new AfricasTalkingGateway(username, apikey);
 
         private readonly AfricasTalkingGatewayException africasTalkingGatewayException = new AfricasTalkingGatewayException("Failed to upload media file");
 
-        [TestMethod]
+        [Fact]
         public void DoPushOutboundCallToOneNumber()
         {
             var phoneNumber = "+254720000001";
             var callerId = "+254720000000";
-            var gatewayResponse  = _atGWInstance.Call(callerId, phoneNumber);
+            var gatewayResponse = _atGWInstance.Call(callerId, phoneNumber);
             var success = gatewayResponse["errorMessage"] == "None";
-            Assert.IsTrue(success, "Should successfully push outbound call to one number");
+            Assert.True(success, "Should successfully push outbound call to one number");
         }
 
-        [TestMethod] 
-        public void DoPushOutboundCallToMultipleNumbers() 
+        [Fact]
+        public void DoPushOutboundCallToMultipleNumbers()
         {
             var numberLists = "+254720000003,test.user@sandbox.sip.africastalking.com";
             var callerId = "+254720000000";
-            var gatewayResponse = _atGWInstance.Call(callerId, numberLists); 
+            var gatewayResponse = _atGWInstance.Call(callerId, numberLists);
             var success = gatewayResponse["errorMessage"] == "None";
-            Assert.IsTrue(success, "Should successfully push outbound call to one number");            
+            Assert.True(success, "Should successfully push outbound call to one number");
         }
 
-        [TestMethod] 
+        [Fact]
         public void DoPushOutboundCallWithRequestId()
         {
             var callee = "+254720000002";
             var callerId = "+254720000000";
             var requestId = "test";
-            var gatewayResponse = _atGWInstance.Call(callerId, callee, requestId); 
+            var gatewayResponse = _atGWInstance.Call(callerId, callee, requestId);
             var success = gatewayResponse["errorMessage"] == "None";
-            Assert.IsTrue(success, "Should successfully push outbound call to one number"); 
+            Assert.True(success, "Should successfully push outbound call to one number");
         }
 
-        [TestMethod] 
-        public void DoUploadMediaFile() 
+        [Fact]
+        public void DoUploadMediaFile()
         {
             var callerId = "+254720000000";
             var fileUrl = "https://storage.zion.ai/chant_of_the_oracle.mp3";
-            var gatewayResponse = _atGWInstance.UploadMediaFile(fileUrl, callerId); 
+            var gatewayResponse = _atGWInstance.UploadMediaFile(fileUrl, callerId);
             // Hacked !!!
             var success = gatewayResponse != africasTalkingGatewayException.ToString();
-            Assert.IsTrue(success, "Should successfully upload media file");
+            Assert.True(success, "Should successfully upload media file");
         }
 
         // Fetch queue
