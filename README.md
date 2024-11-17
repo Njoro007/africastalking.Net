@@ -1,6 +1,44 @@
 # Official Africa's Talking C# API wrapper  
-![Build Status](https://github.com/AfricasTalkingLtd/africastalking.Net/workflows/.NETBuild/badge.svg)
- 
+
+[![.NET 8 Build](https://github.com/Njoro007/africastalking.Net/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Njoro007/africastalking.Net/actions/workflows/dotnet.yml)
+
+# Breaking Change 2024
+## Bulk SMS Docs link --> [API Legacy docs here](https://developers.africastalking.com/docs/sms/overview)
+> Before
+
+```csharp 
+public bool SomeCoolMethodToSendYourSMS()
+{
+    // Your awesome logic
+
+    var response = SendMessage(to, message, from, bulkSmsMode, options)
+
+    //Your awesome logic
+}
+```
+> Now
+
+```csharp 
+public bool SomeCoolMethodToSendYourSMS()
+{
+    // Your awesome logic
+
+    var response = SendMessage(to, message, IsLegacy:false, from, bulkSmsMode, options)
+
+    //Your awesome logic
+}
+```
+> Why IsLegacy?
+> 
+> The New Endpoint seems not to pick the Custom SenderID but it instead uses the default 'AFRIKSTALKIN' SenderID.
+> 
+> The legacy code works well. The difference is that the json property 'to' changed to 'phoneNumbers'
+> 
+> Comparison behaviour between the New and Legacy APIs are under the AfricasTalkingCS.Test Project.
+
+
+# Introduction
+
 [![NuGet](https://img.shields.io/nuget/v/AfricasTalking.NET.svg)](https://www.nuget.org/packages/AfricasTalking.NET/)
 
 The Africa's Talking C# API wrapper provides convenient access to the Africa's Talking API from applications written in C#. With support for .NET45, .NET46 and .NET Core 2 +  
