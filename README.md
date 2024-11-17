@@ -33,8 +33,11 @@ public bool SomeCoolMethodToSendYourSMS()
 > The New Endpoint seems not to pick the Custom SenderID but it instead uses the default 'AFRIKSTALKIN' SenderID.
 > 
 > The legacy code works well. The difference is that the json property 'to' changed to 'phoneNumbers'
+> 
+> Comparison behaviour between the New and Legacy APIs are under the AfricasTalkingCS.Test Project.
 
-## Introduction
+
+# Introduction
 
 [![NuGet](https://img.shields.io/nuget/v/AfricasTalking.NET.svg)](https://www.nuget.org/packages/AfricasTalking.NET/)
 
