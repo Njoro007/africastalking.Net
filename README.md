@@ -1,7 +1,8 @@
 # Official Africa's Talking C# API wrapper  
-![Build Status](https://github.com/AfricasTalkingLtd/africastalking.Net/workflows/.NETBuild/badge.svg)
 
-[![.NET 8 Build Status](https://github.com/Njoro007/africastalking.Net/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Njoro007/africastalking.Net/actions/workflows/dotnet.yml)
+[![.NET 8 Build](https://github.com/Njoro007/africastalking.Net/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Njoro007/africastalking.Net/actions/workflows/dotnet.yml)
+
+![Build Status](https://github.com/AfricasTalkingLtd/africastalking.Net/workflows/.NETBuild/badge.svg)
  
 [![NuGet](https://img.shields.io/nuget/v/AfricasTalking.NET.svg)](https://www.nuget.org/packages/AfricasTalking.NET/)
 
