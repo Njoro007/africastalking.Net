@@ -2,7 +2,36 @@
 
 [![.NET 8 Build](https://github.com/Njoro007/africastalking.Net/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Njoro007/africastalking.Net/actions/workflows/dotnet.yml)
 
-![Build Status](https://github.com/AfricasTalkingLtd/africastalking.Net/workflows/.NETBuild/badge.svg)
+# Breaking Change 2024
+## Bulk SMS Docs link --> [API Legacy docs here](https://developers.africastalking.com/docs/sms/overview)
+> Before
+
+```csharp 
+public bool SomeCoolMethodToSendYourSMS()
+{
+    // Your awesome logic
+
+    var response = SendMessage(to, message, from, bulkSmsMode, options)
+
+    //Your awesome logic
+}
+```
+> Now
+
+```csharp 
+public bool SomeCoolMethodToSendYourSMS()
+{
+    // Your awesome logic
+
+    var response = SendMessage(to, message, IsLegacy:false, from, bulkSmsMode, options)
+
+    //Your awesome logic
+}
+```
+> Why IsLegacy?
+> The New Endpoint seems not to pick the Custom SenderID but it instead uses the default 'AFRIKSTALKIN' SenderID.
+> The legacy code works well. The difference is that the json property 'to' changed to 'phoneNumbers'
+
  
 [![NuGet](https://img.shields.io/nuget/v/AfricasTalking.NET.svg)](https://www.nuget.org/packages/AfricasTalking.NET/)
 
