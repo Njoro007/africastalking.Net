@@ -15,7 +15,7 @@ namespace AfricasTalkingCS.Test
         public void DoSendMessageToSingleValidNumber_Legacy()
         {
             var phoneNumber = "+254720000000";
-            var message = "Hello Philip 2";
+            var message = "Hello Legacy Endpoint";
 
             var gatewayResponse = _atGWInstance.SendMessage(phoneNumber, message, IsLegacy: true, username);
 
@@ -28,7 +28,7 @@ namespace AfricasTalkingCS.Test
         public void DoSendMessageToSingleValidNumber()
         {
             var phoneNumber = "+254720000000";
-            var message = "Hello Philip 2";
+            var message = "Hello New Endpoint";
 
             var gatewayResponse = _atGWInstance.SendMessage(phoneNumber, message, IsLegacy: false, username);
 
@@ -42,7 +42,7 @@ namespace AfricasTalkingCS.Test
         public void DoSendMessageToManyValidNumbers_Legacy()
         {
             var phoneNumerList = "+254720000000,+254720000000";
-            var message = "Good Evening Mr. Smith erer";
+            var message = "Good Evening Legacy Endpoint";
 
             var gatewayResponse = _atGWInstance.SendMessage(phoneNumerList, message, IsLegacy:true, username);
 
@@ -60,7 +60,7 @@ namespace AfricasTalkingCS.Test
         public void DoSendMessageToManyValidNumbers()
         {
             var phoneNumerList = "+254720000000,+254720000000";
-            var message = "Good Evening Mr. Smith erer";
+            var message = "Good Evening New Endpoint";
 
             var gatewayResponse = _atGWInstance.SendMessage(phoneNumerList, message, IsLegacy: false, username);
 
