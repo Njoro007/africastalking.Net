@@ -23,5 +23,6 @@ namespace AfricasTalkingCS.Test
             var success = gatewayResponse["status"] == "Queued" && gatewayResponse["errorMessage"] == "None";
             Assert.True(success, "Should successfully initiate a USSS Push request");
         }
+
     }
 }
