@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;net9.0;</TargetFrameworks>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>1.2.4</Version>
+		<Version>2.0.1</Version>
 		<Authors>TheBeachmaster,Njoro007</Authors>
 		<PackageId>AfricasTalking.NET</PackageId>
 		<Company>Africa's Talking Ltd</Company>
@@ -17,8 +17,8 @@
 		<RepositoryUrl>https://github.com/AfricasTalkingLtd/africastalking.Net</RepositoryUrl>
 		<RepositoryType>Git</RepositoryType>
 		<PackageTags>sms voice mobile-payments airtime card-payments bank-tranfers otp-validations</PackageTags>
-		<AssemblyVersion>1.2.4</AssemblyVersion>
-		<FileVersion>1.2.4</FileVersion>
+		<AssemblyVersion>2.0.1</AssemblyVersion>
+		<FileVersion>2.0.1</FileVersion>
 		<SignAssembly>false</SignAssembly>
 		<AssemblyOriginatorKeyFile>AfricasTalking.NET.pfx</AssemblyOriginatorKeyFile>
 		<PackageReleaseNotes>
@@ -32,11 +32,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="coverlet.collector" Version="6.0.2">
+		<PackageReference Include="coverlet.collector" Version="6.0.3">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="libphonenumber-csharp" Version="8.13.50" />
+		<PackageReference Include="libphonenumber-csharp" Version="8.13.52" />
 		<PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
