@@ -5,8 +5,8 @@ namespace AfricasTalkingCS.Test
 {
     public class SMSServicesTest
     {
-        private static string apikey = "atsk_c0c065cc2d7e9e46b0d71024";
-        private static string username = "SENDER_ID";
+        private static string apikey = "atsk_c0c0658d703dbfa65a771ea246a49b0e714a2dd5ead1c33233a2c9cc2d7e9e46b0d71024";
+        private static string username = "GROUP4SACCO";
         private static AfricasTalkingGateway _atGWInstance = new AfricasTalkingGateway(username, apikey);
 
 
@@ -14,7 +14,7 @@ namespace AfricasTalkingCS.Test
         [Fact]
         public void DoSendMessageToSingleValidNumber_Legacy()
         {
-            var phoneNumber = "+254720000000";
+            var phoneNumber = "+254712321233";
             var message = "Hello Legacy Endpoint";
 
             var gatewayResponse = _atGWInstance.SendMessage(phoneNumber, message, IsLegacy: true, username);
@@ -27,7 +27,7 @@ namespace AfricasTalkingCS.Test
         [Fact]
         public void DoSendMessageToSingleValidNumber()
         {
-            var phoneNumber = "+254720000000";
+            var phoneNumber = "+254712321233";
             var message = "Hello New Endpoint";
 
             var gatewayResponse = _atGWInstance.SendMessage(phoneNumber, message, IsLegacy: false, username);
